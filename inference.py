@@ -27,14 +27,24 @@ def load_model(path, device=None):
     # Recreate tokenizer with saved vocabulary
     tokenizer = YorubaTokenizer(vocab=checkpoint['tokenizer_vocab'])
 
-    # Recreate model
-    config = checkpoint['model_config']
-    model = DiacriticRestorer(
-        vocab_size=config['vocab_size'],
-        embedding_dim=config['embedding_dim'],
-        hidden_dim=config['hidden_dim'],
-        num_layers=config['num_layers']
-    ).to(device)
+    # Recreate model - handle both checkpoint formats
+    if 'model_config' in checkpoint:
+        # New format with explicit config
+        config = checkpoint['model_config']
+        model = DiacriticRestorer(
+            vocab_size=config['vocab_size'],
+            embedding_dim=config['embedding_dim'],
+            hidden_dim=config['hidden_dim'],
+            num_layers=config['num_layers']
+        ).to(device)
+    else:
+        # Old format (training checkpoint) - use defaults matching train.py
+        model = DiacriticRestorer(
+            vocab_size=len(checkpoint['tokenizer_vocab']),
+            embedding_dim=128,
+            hidden_dim=256,
+            num_layers=2
+        ).to(device)
 
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
@@ -119,7 +129,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description='Yoruba Diacritic Restoration')
-    parser.add_argument('--model', type=str, default='yoruba_diacritic_model.pt',
+    parser.add_argument('--model', type=str, default='FINALMODEL.pt',
                         help='Path to model checkpoint')
     parser.add_argument('--text', type=str, default=None,
                         help='Text to restore diacritics for')

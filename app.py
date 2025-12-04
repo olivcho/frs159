@@ -3,11 +3,13 @@ Flask API server for Yoruba diacritic restoration.
 """
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import torch
 from tokenizer import YorubaTokenizer
 from model import DiacriticRestorer
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for frontend
 
 # Global model variables
 model = None
@@ -15,7 +17,7 @@ tokenizer = None
 device = None
 
 
-def load_model(path='FINALMODEL.pt'):
+def load_model(path='FINALFINALFINALMODEL.pt'):
     """Load the model on startup."""
     global model, tokenizer, device
 
@@ -144,7 +146,7 @@ if __name__ == '__main__':
                         help='Path to model checkpoint')
     parser.add_argument('--host', type=str, default='0.0.0.0',
                         help='Host to run server on')
-    parser.add_argument('--port', type=int, default=5000,
+    parser.add_argument('--port', type=int, default=3001,
                         help='Port to run server on')
     parser.add_argument('--debug', action='store_true',
                         help='Run in debug mode')

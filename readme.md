@@ -1,6 +1,9 @@
 Yoruba Diacritic Restoration Project
 Project Overview
-A context-aware neural network that restores missing tonal diacritics in Yoruba text using surrounding context. This addresses a real NLP problem: 90%+ of digital Yoruba text omits diacritics due to keyboard accessibility, creating semantic ambiguity.
+A context-aware Bi-LSTM neural network that enhances English-to-Yoruba translation by adding proper tonal diacritics. This solves a critical problem: Google Translate outputs Yoruba text without the tonal marks essential for meaning.
+
+**Complete Workflow:**
+English → Google Translate → Yoruba (no diacritics) → Bi-LSTM Model → Yoruba (with diacritics)
 Example:
     •    Input: o ri owo lana
     •    Output: ó rí owó lána (he saw money yesterday)
@@ -79,6 +82,16 @@ def evaluate(model, loader, criterion, device) -> (avg_loss, accuracy)
 Inference
 def restore_diacritics(text, model, tokenizer, device) -> str
 Main function to restore diacritics on new text.
+
+## Use Case: Enhancing Google Translate
+
+The primary use case for this model is to improve English-to-Yoruba translation:
+
+1. **User inputs English text** (e.g., "Hello, how are you?")
+2. **Google Translate** converts to Yoruba without diacritics (e.g., "Pele, bawo ni o se wa?")
+3. **Our Bi-LSTM model** adds proper diacritics (e.g., "Pẹlẹ, báwo ni ọ ṣe wà?")
+
+This addresses Google Translate's limitation in producing linguistically accurate Yoruba text with proper tonal markers.
 Expected Performance
     •    Character Accuracy: 75-85%
     •    Diacritic-Specific Accuracy: 70-80%

@@ -1,3 +1,46 @@
+# Yoruba Diacritic Restoration Demo
+
+A web application demonstrating English to Yoruba translation with automatic diacritic restoration using a Bi-LSTM model.
+
+## Overview
+
+This demo showcases a two-step translation process:
+1. **Google Translate**: Converts English text to Yoruba (without proper diacritics)
+2. **Bi-LSTM Model**: Adds correct tonal diacritics to improve translation accuracy
+
+## Getting Started
+
+### Prerequisites
+- Node.js and npm
+- Python backend server running on port 3001
+
+### Installation
+
+```bash
+npm install
+```
+
+### Running the Demo
+
+1. Start the Python backend:
+```bash
+cd ..
+python app.py
+```
+
+2. Start the frontend development server:
+```bash
+npm run dev
+```
+
+3. Open your browser to the provided local URL
+
+## How It Works
+
+Google Translate doesn't produce properly accented Yoruba text. Our Bi-LSTM model solves this by adding the correct tonal marks (á, à, ẹ, ọ, ṣ, etc.) to create linguistically accurate Yoruba translations.
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
